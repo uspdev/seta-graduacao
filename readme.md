@@ -1,1 +1,1 @@
-# Sistema EletrÃnico de Trabalhos AcadÃmicos
+# Sistema EletrÃ´nico de Trabalhos AcadÃªmicos
