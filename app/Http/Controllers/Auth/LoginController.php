@@ -6,6 +6,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Socialite;
 
+use App\User;
+use Auth;
+use Illuminate\Http\Request;
+
 class LoginController extends Controller
 {
     /*
@@ -26,7 +30,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/';
 
     /**
      * Create a new controller instance.
@@ -45,6 +49,21 @@ class LoginController extends Controller
 
     public function handleProviderCallback()
     {
-	 $user = Socialite::driver('senhaunica')->user();
+        $user = Socialite::driver('senhaunica')->user();
+        $authUser = User::where('id', $user->id)->first();
+        if (!$authUser)
+        {
+            $authUser = new User;
+            $authUser->name = $user->name;
+            $authUser->email = $user->email;
+            $authUser->id = $user->id;
+            $authUser->save();
+        }
+        Auth::login($authUser, true);
+        return redirect('/');
+    }
+    public function logout(Request $request) {
+      Auth::logout();
+      return redirect('/');
     }
 }
