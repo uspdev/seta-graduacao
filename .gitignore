@@ -8,7 +8,7 @@
 /storage/*.key
 /vendor
 /.idea
--/.vscode
+/.vscode
 /.vagrant
 /.phpintel/
 Homestead.json
