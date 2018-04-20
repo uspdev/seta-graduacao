@@ -50,13 +50,13 @@ class LoginController extends Controller
     public function handleProviderCallback()
     {
         $user = Socialite::driver('senhaunica')->user();
-        $authUser = User::where('id', $user->id)->first();
+        $authUser = User::where('id', $user->codpes)->first();
         if (!$authUser)
         {
             $authUser = new User;
-            $authUser->name = $user->name;
+            $authUser->name = $user->nompes;
             $authUser->email = $user->email;
-            $authUser->id = $user->id;
+            $authUser->id = $user->codpes;
             $authUser->save();
         }
         Auth::login($authUser, true);

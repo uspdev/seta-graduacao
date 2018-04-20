@@ -111,7 +111,7 @@ return [
         'Área do aluno',
         [
             'text'        => 'Submeter Trabalho',
-            'url'         => '/',
+            'url'         => '/arquivo',
             'icon'        => 'file',
             'label_color' => 'success',
         ],
