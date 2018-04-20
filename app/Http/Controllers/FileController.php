@@ -15,14 +15,14 @@ class FileController extends Controller
 
     public function submit(Request $request)
     {
-        // A variável $pdf contem os metadados do arquivo
-        $parser = new Parser();
-        $pdf = $parser->parseFile($request->arquivo);
-        
         $request->validate([
             'titulo'       => "required",
             'arquivo'      => "required|mimes:pdf|max:5000"
         ]);
+        
+        // A variável $pdf contem os metadados do arquivo
+        $parser = new Parser();
+        $pdf = $parser->parseFile($request->arquivo);
         
         return redirect('/arquivo');
     }
