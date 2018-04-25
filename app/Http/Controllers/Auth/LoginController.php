@@ -47,9 +47,23 @@ class LoginController extends Controller
 	 return Socialite::driver('senhaunica')->redirect();
     }
 
-    public function handleProviderCallback()
+    public function handleProviderCallback(Request $request)
     {
         $user = Socialite::driver('senhaunica')->user();
+        if (isset($user->vinculo) && !empty($user->vinculo)) {
+            if(count($user->vinculo) > 1) {
+                $todos = '';
+                foreach($user->vinculo as $vinculo){
+                    $todos .= $vinculo['tipoVinculo'] . ' '; 
+                }
+                $request->session()->flash('alert-info', $todos);    
+            } else {
+                $request->session()->flash('alert-info', $user->vinculo[0]['tipoVinculo']);
+            }
+        } else {
+            $request->session()->flash('alert-danger', "Sem vinculo"); 
+            return redirect('/');
+        }
         $authUser = User::where('id', $user->codpes)->first();
         if (!$authUser)
         {
