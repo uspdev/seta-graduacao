@@ -50,34 +50,44 @@ class LoginController extends Controller
     public function handleProviderCallback(Request $request)
     {
         $user = Socialite::driver('senhaunica')->user();
-        if (isset($user->vinculo) && !empty($user->vinculo)) {
-            if(count($user->vinculo) > 1) {
-                $todos = '';
-                foreach($user->vinculo as $vinculo){
-                    $todos .= $vinculo['tipoVinculo'] . ' '; 
-                }
-                $request->session()->flash('alert-info', $todos);    
-            } else {
-                $request->session()->flash('alert-info', $user->vinculo[0]['tipoVinculo']);
+        $vinculo = $this->retornaVinculo($user);
+        if ($vinculo) {
+            $authUser = User::where('id', $user->codpes)->first();
+            if (!$authUser)
+            {
+                $authUser = new User;
+                $authUser->name = $user->nompes;
+                $authUser->email = $user->email;
+                $authUser->id = $user->codpes;
+                $authUser->tipoVinculo = $vinculo;
+                $authUser->save();
             }
-        } else {
-            $request->session()->flash('alert-danger', "Sem vinculo"); 
-            return redirect('/');
+            Auth::login($authUser, true);
         }
-        $authUser = User::where('id', $user->codpes)->first();
-        if (!$authUser)
-        {
-            $authUser = new User;
-            $authUser->name = $user->nompes;
-            $authUser->email = $user->email;
-            $authUser->id = $user->codpes;
-            $authUser->save();
-        }
-        Auth::login($authUser, true);
         return redirect('/');
     }
+
     public function logout(Request $request) {
       Auth::logout();
       return redirect('/');
+    }
+
+    private function retornaVinculo($user)
+    {
+        $vinculo = false;
+        $admins = explode(',', trim(env('CODPES_ADMINS')));
+        $vinculos = array('ALUNOGR', 'DOCENTE');
+        
+        foreach ($user->vinculo as $temp) {
+          if (in_array($temp['tipoVinculo'], $vinculos))
+          {
+            $vinculo = $temp['tipoVinculo'];
+          }
+        }
+        if (in_array($user->codpes, $admins))
+        {
+            $vinculo = 'ADMIN';
+        }  
+        return $vinculo;
     }
 }
