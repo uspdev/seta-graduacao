@@ -1,4 +1,6 @@
 <?php
+# resources
+Route::resource('editais','EditalController');
 
 Route::get('login', 'Auth\LoginController@redirectToProvider');
 Route::get('callback', 'Auth\LoginController@handleProviderCallback');
