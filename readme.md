@@ -17,7 +17,7 @@ Para o orientador:
 ## Instalação de bibliotecas e dependências
 
     node
-    php7+
+    php7.1.3+
 
 Procure pela biblioteca em sua distribuição.
 
