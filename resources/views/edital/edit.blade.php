@@ -2,7 +2,7 @@
 
 @extends('adminlte::page')
 
-@section('title', 'Criação de Edital')
+@section('title', 'Editar Edital')
 
 @section('content_header')
 
@@ -11,8 +11,9 @@
 @section('content')
 @include('alerts')
 
-<form method="POST" action="{{ url('editais') }}"> 
+<form method="POST" action="{{ url('editais') . '/' . $edital->id }}"> 
     {{ csrf_field() }}
+    {{ method_field('patch') }}
     @include('edital.form')
 </form>
 @stop
