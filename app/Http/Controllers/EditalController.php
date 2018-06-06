@@ -14,7 +14,8 @@ class EditalController extends Controller
      */
     public function index()
     {
-        return view('edital.index');
+        $editais = Edital::all();
+        return view('edital.index', compact('editais'));
     }
 
     /**
@@ -22,9 +23,9 @@ class EditalController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)
+    public function create()
     {
-        return view('edital.create', compact('request'));
+        return view('edital.create');
     }
 
     /**
@@ -35,7 +36,19 @@ class EditalController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //dd($request->dtInicialInscricao);
+        $edital = new Edital;
+        $edital->anoReferencia              = $request->anoReferencia;
+        $edital->dtInicialInscricao         = $request->dtInicialInscricao;
+        $edital->dtFinalInscricao           = $request->dtFinalInscricao;
+        $edital->dtInicialRelatorio         = $request->dtInicialRelatorio;
+        $edital->dtFinalRelatorio           = $request->dtFinalRelatorio;
+        $edital->dtInicialTCC               = $request->dtInicialTCC;
+        $edital->dtFinalTCC                 = $request->dtFinalTCC;
+        $edital->dtInicialInscricaoBanca    = $request->dtInicialInscricaoBanca;
+        $edital->dtFinalInscricaoBanca      = $request->dtFinalInscricaoBanca;
+        $edital->save();
+        return redirect("/editais/$edital->id");
     }
 
     /**
@@ -46,7 +59,7 @@ class EditalController extends Controller
      */
     public function show(Edital $edital)
     {
-        //
+        return view('edital.show', compact('edital'));
     }
 
     /**
@@ -57,7 +70,7 @@ class EditalController extends Controller
      */
     public function edit(Edital $edital)
     {
-        //
+        return view('edital.edit', compact('edital'));
     }
 
     /**
@@ -69,7 +82,16 @@ class EditalController extends Controller
      */
     public function update(Request $request, Edital $edital)
     {
-        //
+        $edital->dtInicialInscricao         = $request->dtInicialInscricao;
+        $edital->dtFinalInscricao           = $request->dtFinalInscricao;
+        $edital->dtInicialRelatorio         = $request->dtInicialRelatorio;
+        $edital->dtFinalRelatorio           = $request->dtFinalRelatorio;
+        $edital->dtInicialTCC               = $request->dtInicialTCC;
+        $edital->dtFinalTCC                 = $request->dtFinalTCC;
+        $edital->dtInicialInscricaoBanca    = $request->dtInicialInscricaoBanca;
+        $edital->dtFinalInscricaoBanca      = $request->dtFinalInscricaoBanca;
+        $edital->save();
+        return redirect("/editais/$edital->id");
     }
 
     /**
@@ -78,8 +100,10 @@ class EditalController extends Controller
      * @param  \App\Edital  $edital
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Edital $edital)
+    public function destroy(Edital $edital, Request $request)
     {
-        //
+        $edital->delete();
+        $request->session()->flash('alert-danger', 'Edital deletado com sucesso!');
+        return redirect()->action('EditalController@index');
     }
 }

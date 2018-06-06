@@ -115,6 +115,19 @@ return [
             'icon'        => 'file',
             'label_color' => 'success',
         ],
+        'Área do Administrador',
+        [
+            'text'        => 'Cadastrar Edital',
+            'url'         => '/editais/create',
+            'icon'        => 'calendar-plus-o',
+            'label_color' => 'info',
+        ],
+        [
+            'text'        => 'Listar Editais',
+            'url'         => '/editais',
+            'icon'        => 'calendar',
+            'label_color' => 'info',
+        ],
     ],
 
     /*
