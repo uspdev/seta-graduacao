@@ -3,7 +3,11 @@
             
             <div class="box box-primary">
                 <div class="box-header">
-                    <h2 class="box-title">Criar Edital</h2>
+                    <h2 class="box-title">{{ $title }}
+                        @if (isset($edital->anoReferencia))
+                            - {{ $edital->anoReferencia}}
+                        @endif
+                    </h2>
                 </div>
                 <div class="box-body">
                     <div class="form-group" 
