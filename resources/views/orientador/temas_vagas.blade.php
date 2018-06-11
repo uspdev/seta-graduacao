@@ -2,7 +2,7 @@
 
 @extends('adminlte::page')
 
-@section('title', 'Editar Edital')
+@section('title', 'Inserir Tema')
 
 @section('content_header')
 
@@ -11,11 +11,10 @@
 @section('content')
 @include('alerts')
 @php
-    $title = 'Editar Edital';
+    $title = 'Cadastrar tema e quantidade de vagas';
 @endphp
-<form method="POST" action="{{ url('editais') . '/' . $edital->id }}"> 
+<form method="POST" action=""> 
     {{ csrf_field() }}
-    {{ method_field('patch') }}
-    @include('edital.form')
+    @include('orientador.form')
 </form>
 @stop

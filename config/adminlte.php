@@ -128,6 +128,14 @@ return [
             'icon'        => 'calendar',
             'label_color' => 'info',
         ],
+        'Área do Docente',
+        [
+            'text'        => 'Cad Temas e Qtde Alunos',
+            'url'         => '/cadtema',
+            'icon'        => 'file-text-o',
+            'label_color' => 'info',
+        ],
+
     ],
 
     /*

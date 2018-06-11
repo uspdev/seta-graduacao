@@ -10,7 +10,9 @@
 
 @section('content')
 @include('alerts')
-
+@php
+    $title = 'Criar Edital';
+@endphp
 <form method="POST" action="{{ url('editais') }}"> 
     {{ csrf_field() }}
     @include('edital.form')

@@ -3,7 +3,11 @@
             
             <div class="box box-primary">
                 <div class="box-header">
-                    <h2 class="box-title">Criar Edital</h2>
+                    <h2 class="box-title">{{ $title }}
+                        @if (isset($edital->anoReferencia))
+                            - {{ $edital->anoReferencia}}
+                        @endif
+                    </h2>
                 </div>
                 <div class="box-body">
                     <div class="form-group" 
@@ -30,6 +34,7 @@
                                            value="{{ $edital->dtInicialInscricao or old('dtInicialInscricao') }}">
                                 </div>
                             </div>
+                            <div class="col-sm-1"></div>
                             <div class="form-group col-md-3">
                                 Data Final:
                                 <div class="input-group">
@@ -56,6 +61,7 @@
                                            value="{{ $edital->dtInicialRelatorio or old('dtInicialRelatorio')}}">
                                 </div>
                             </div>
+                            <div class="col-sm-1"></div>
                             <div class="form-group col-md-3">
                                 Data Final:
                                 <div class="input-group">
@@ -82,6 +88,7 @@
                                            value="{{ $edital->dtInicialTCC or old('dtInicialTCC') }}">
                                 </div>
                             </div>
+                            <div class="col-sm-1"></div>
                             <div class="form-group col-md-3">
                                 Data Final:
                                 <div class="input-group">
@@ -108,6 +115,7 @@
                                            value="{{ $edital->dtInicialInscricaoBanca or old('dtInicialInscricaoBanca')}}">
                                 </div>
                             </div>
+                            <div class="col-sm-1"></div>
                             <div class="form-group col-md-3">
                                 Data Final:
                                 <div class="input-group">
@@ -124,7 +132,7 @@
                 </div>
                 <!-- /.box-body -->
                 <div class="box-footer">
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" class="btn btn-primary">Gravar</button>
                 </div>
             </div>
         </div>
