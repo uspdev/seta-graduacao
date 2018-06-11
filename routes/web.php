@@ -19,3 +19,5 @@ Route::post('logout', 'Auth\LoginController@logout');
 Route::get('/', 'IndexController@index');
 Route::get('/arquivo', 'FileController@index');
 Route::post('/arquivo/submeter', 'FileController@submit');
+
+Route::get('/cadtema', 'EditalController@cadTemaAluno');

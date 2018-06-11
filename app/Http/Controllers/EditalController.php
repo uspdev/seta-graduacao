@@ -106,4 +106,13 @@ class EditalController extends Controller
         $request->session()->flash('alert-danger', 'Edital deletado com sucesso!');
         return redirect()->action('EditalController@index');
     }
+
+    /***
+     * Seção de cadastro de temas e orientandos para docente
+     * 
+     */
+    public function cadTemaAluno()
+    {
+        return view('orientador.temas_vagas');
+    }
 }
