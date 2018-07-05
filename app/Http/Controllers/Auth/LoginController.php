@@ -79,7 +79,7 @@ class LoginController extends Controller
         $vinculos = array('ALUNOGR', 'DOCENTE');
         
         foreach ($user->vinculo as $temp) {
-          if (in_array($temp['tipoVinculo'], $vinculos))
+          if (in_array($temp['tipoVinculo'], $vinculos) && ($temp['codigoUnidade'] == env('REPLICADO_CODUND')))
           {
             $vinculo = $temp['tipoVinculo'];
           }
