@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Edital;
 use Illuminate\Http\Request;
-use Uspdev\Replicado\Pessoa;
+
 
 class EditalController extends Controller
 {
