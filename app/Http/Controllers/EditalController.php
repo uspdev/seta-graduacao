@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Edital;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
+//use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Facades\Auth;
 
 
 class EditalController extends Controller
@@ -113,7 +116,42 @@ class EditalController extends Controller
      * 
      */
     public function cadTemaAluno()
-    {
-        return view('orientador.temas_vagas');
+    {   
+        if (!Auth::user()){
+            return redirect("/");
+        }
+        $user = Auth::user()->id;
+        $ano = Carbon::create(2017);
+        $edital = Edital::where('anoReferencia', $ano->year)->first();
+        $cadtema = $edital->orientadores()->wherePivot('idOrientador', $user)->first();
+        return view('orientador.temas_vagas', compact(['edital','cadtema']));
+    }
+
+    public function storeTemaAluno(Request $request)
+    {   
+        $ano = Carbon::create(2017);
+        // $edital = Edital::where('anoReferencia', $ano->year)->first();
+        $edital = (new Edital)->getEditalPorAno($ano);
+        
+        $user = \Auth::user()->id;
+        if ($edital->orientadores()->wherePivot('idOrientador', $user)->first()) {
+            $edital
+                ->orientadores()
+                ->updateExistingPivot(
+                    $user, 
+                    [
+                        'temasOrientacao' => $request->temasOrientacao, 
+                        'numVagas' => $request->numVagas
+                    ]);
+        } else {
+            $edital->orientadores()->attach(
+                $user, 
+                [
+                    'temasOrientacao' => $request->temasOrientacao, 
+                    'numVagas' => $request->numVagas
+                ]);
+        }
+        $edital->save();
+        return redirect("/editais");
     }
 }

@@ -21,3 +21,4 @@ Route::get('/arquivo', 'FileController@index');
 Route::post('/arquivo/submeter', 'FileController@submit');
 
 Route::get('/cadtema', 'EditalController@cadTemaAluno');
+Route::post('/cadtema', 'EditalController@storeTemaAluno');
