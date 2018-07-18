@@ -45,12 +45,15 @@ class EditalController extends Controller
         $edital->anoReferencia              = $request->anoReferencia;
         $edital->dtInicialInscricao         = $request->dtInicialInscricao;
         $edital->dtFinalInscricao           = $request->dtFinalInscricao;
+        $edital->dtPublicacaoResultados     = $request->dtPublicacaoResultados;
         $edital->dtInicialRelatorio         = $request->dtInicialRelatorio;
         $edital->dtFinalRelatorio           = $request->dtFinalRelatorio;
         $edital->dtInicialTCC               = $request->dtInicialTCC;
         $edital->dtFinalTCC                 = $request->dtFinalTCC;
         $edital->dtInicialInscricaoBanca    = $request->dtInicialInscricaoBanca;
         $edital->dtFinalInscricaoBanca      = $request->dtFinalInscricaoBanca;
+        $edital->dtInicialApresentacaoTCC   = $request->dtInicialApresentacaoTCC;
+        $edital->dtFinalApresentacaoTCC     = $request->dtFinalApresentacaoTCC;
         $edital->save();
         return redirect("/editais/$edital->id");
     }
@@ -88,12 +91,16 @@ class EditalController extends Controller
     {
         $edital->dtInicialInscricao         = $request->dtInicialInscricao;
         $edital->dtFinalInscricao           = $request->dtFinalInscricao;
+        $edital->dtPublicacaoResultados     = $request->dtPublicacaoResultados;
         $edital->dtInicialRelatorio         = $request->dtInicialRelatorio;
         $edital->dtFinalRelatorio           = $request->dtFinalRelatorio;
         $edital->dtInicialTCC               = $request->dtInicialTCC;
         $edital->dtFinalTCC                 = $request->dtFinalTCC;
         $edital->dtInicialInscricaoBanca    = $request->dtInicialInscricaoBanca;
         $edital->dtFinalInscricaoBanca      = $request->dtFinalInscricaoBanca;
+        $edital->dtInicialApresentacaoTCC   = $request->dtInicialApresentacaoTCC;
+        $edital->dtFinalApresentacaoTCC     = $request->dtFinalApresentacaoTCC;
+        $edital->ativo                      = ($request->ativo)?1:0;
         $edital->save();
         return redirect("/editais/$edital->id");
     }
@@ -121,7 +128,7 @@ class EditalController extends Controller
             return redirect("/");
         }
         $user = Auth::user()->id;
-        $ano = Carbon::create(2017);
+        $ano = Carbon::create(2018);
         $edital = Edital::where('anoReferencia', $ano->year)->first();
         $cadtema = $edital->orientadores()->wherePivot('idOrientador', $user)->first();
         return view('orientador.temas_vagas', compact(['edital','cadtema']));
