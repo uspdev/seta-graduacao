@@ -20,11 +20,6 @@ class EditalUnitTest extends TestCase
         factory(\App\Edital::class)->states('year_ago')->create();
         factory(\App\Edital::class)->create();
         
-        //
-        // $editais = Edital::all();
-        // dump($editais);
-        //
-
         $edital_model = new Edital();
         $ano_atual = new Carbon();
 
@@ -32,5 +27,19 @@ class EditalUnitTest extends TestCase
         dump($edital_atual);
         // $this->assertEquals(1, count($edital_atual));
         $this->assertEquals(2018, $edital_atual->anoReferencia);
+    }
+
+    /** @test */
+    public function deveriaRetornarEditaisAtivos()
+    {
+        factory(\App\Edital::class)->states('year_ago')->create();
+        factory(\App\Edital::class)->create();
+        factory(\App\Edital::class)->states('unactive')->create();
+        
+        $edital_model = new Edital();
+        $ativos = $edital_model->getEditaisAtivos();
+        $todos = \App\Edital::all();
+        $this->assertEquals(2, count($ativos));
+        $this->assertEquals(3, count($todos));
     }
 }
