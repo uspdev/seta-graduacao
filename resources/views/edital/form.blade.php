@@ -10,16 +10,14 @@
                     </h2>
                 </div>
                 <div class="box-body">
-                    <div class="form-group" 
-                    @if (isset($edital->anoReferencia))
-                        hidden
-                    @endif
-                    >
-                        <label>Ano Referência:</label>
-                        <div class="input-group date">
-                            <input class="form-control pull-right" name="anoReferencia" type="text" maxlength="4">
+                    @if (!isset($edital->anoReferencia))
+                        <div class="form-group">
+                            <label>Ano Referência:</label>
+                            <div class="input-group date">
+                                <input class="form-control pull-right" name="anoReferencia" type="text" maxlength="4">
+                            </div>
                         </div>
-                    </div>
+                    @endif
 
                     <div class="form-group">
                         <label>Período de Inscrição</label>                        
@@ -43,6 +41,22 @@
                                     </div>
                                     <input class="form-control" name="dtFinalInscricao" id="dtFinalInscricao" type="date"
                                            value="{{ $edital->dtFinalInscricao or old('dtFinalInscricao') }}">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Data de Publicação da Seleção de Orientandos</label>                        
+                        <div class="row">
+                            <div class="form-group col-md-3">
+                                Data:
+                                <div class="input-group">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </div>
+                                    <input class="form-control" name="dtPublicacaoResultados" id="dtPublicacaoResultados" type="date"
+                                           value="{{ $edital->dtPublicacaoResultados or old('dtPublicacaoResultados')}}">
                                 </div>
                             </div>
                         </div>
@@ -128,6 +142,42 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="form-group">
+                        <label>Período para Agendamento da Apresentação do TCC</label>                        
+                        <div class="row">
+                            <div class="form-group col-md-3">
+                                Data Inicial:
+                                <div class="input-group">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </div>
+                                    <input class="form-control" name="dtInicialApresentacaoTCC" id="dtInicialApresentacaoTCC" type="date"
+                                           value="{{ $edital->dtInicialApresentacaoTCC or old('dtInicialApresentacaoTCC')}}">
+                                </div>
+                            </div>
+                            <div class="col-sm-1"></div>
+                            <div class="form-group col-md-3">
+                                Data Final:
+                                <div class="input-group">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </div>
+                                    <input class="form-control" name="dtFinalApresentacaoTCC" id="dtFinalApresentacaoTCC" type="date"
+                                           value="{{ $edital->dtFinalApresentacaoTCC or old('dtFinalApresentacaoTCC')}}">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    @if (isset($edital->anoReferencia))
+                    <div class="form-group">
+                        <label>Edital Ativo: 
+                            <input name="ativo" id="ativo" type="checkbox"
+                                value="1" {{ ($edital->ativo) ? 'checked' : ''}} />
+                        </label>                        
+                    </div>
+                    @endif
 
                 </div>
                 <!-- /.box-body -->

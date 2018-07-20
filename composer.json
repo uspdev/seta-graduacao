@@ -28,7 +28,11 @@
         ],
         "psr-4": {
             "App\\": "app/"
-        }
+        },
+        "files": [
+            "app/SetaHelpers.php"
+        ]
+
     },
     "autoload-dev": {
         "psr-4": {

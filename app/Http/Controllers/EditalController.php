@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Edital;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
+//use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Facades\Auth;
 
 
 class EditalController extends Controller
@@ -42,12 +45,15 @@ class EditalController extends Controller
         $edital->anoReferencia              = $request->anoReferencia;
         $edital->dtInicialInscricao         = $request->dtInicialInscricao;
         $edital->dtFinalInscricao           = $request->dtFinalInscricao;
+        $edital->dtPublicacaoResultados     = $request->dtPublicacaoResultados;
         $edital->dtInicialRelatorio         = $request->dtInicialRelatorio;
         $edital->dtFinalRelatorio           = $request->dtFinalRelatorio;
         $edital->dtInicialTCC               = $request->dtInicialTCC;
         $edital->dtFinalTCC                 = $request->dtFinalTCC;
         $edital->dtInicialInscricaoBanca    = $request->dtInicialInscricaoBanca;
         $edital->dtFinalInscricaoBanca      = $request->dtFinalInscricaoBanca;
+        $edital->dtInicialApresentacaoTCC   = $request->dtInicialApresentacaoTCC;
+        $edital->dtFinalApresentacaoTCC     = $request->dtFinalApresentacaoTCC;
         $edital->save();
         return redirect("/editais/$edital->id");
     }
@@ -85,12 +91,16 @@ class EditalController extends Controller
     {
         $edital->dtInicialInscricao         = $request->dtInicialInscricao;
         $edital->dtFinalInscricao           = $request->dtFinalInscricao;
+        $edital->dtPublicacaoResultados     = $request->dtPublicacaoResultados;
         $edital->dtInicialRelatorio         = $request->dtInicialRelatorio;
         $edital->dtFinalRelatorio           = $request->dtFinalRelatorio;
         $edital->dtInicialTCC               = $request->dtInicialTCC;
         $edital->dtFinalTCC                 = $request->dtFinalTCC;
         $edital->dtInicialInscricaoBanca    = $request->dtInicialInscricaoBanca;
         $edital->dtFinalInscricaoBanca      = $request->dtFinalInscricaoBanca;
+        $edital->dtInicialApresentacaoTCC   = $request->dtInicialApresentacaoTCC;
+        $edital->dtFinalApresentacaoTCC     = $request->dtFinalApresentacaoTCC;
+        $edital->ativo                      = ($request->ativo)?1:0;
         $edital->save();
         return redirect("/editais/$edital->id");
     }
@@ -112,8 +122,48 @@ class EditalController extends Controller
      * Seção de cadastro de temas e orientandos para docente
      * 
      */
-    public function cadTemaAluno()
-    {
-        return view('orientador.temas_vagas');
+    public function cadTemaAluno(Request $request, $ano = null)
+    {   
+        if (!Auth::user()){
+            return redirect("/");
+        }
+        $user = Auth::user()->id;
+        $ano_edital = Carbon::create($ano);
+        $edital = Edital::where('anoReferencia', $ano_edital->year)->first();
+        if ($edital) {
+            $cadtema = $edital->orientadores()->wherePivot('idOrientador', $user)->first();
+            $request->session()->put('edital', $edital);
+            return view('orientador.temas_vagas', compact(['edital','cadtema']));
+        }
+        $request->session()->flash('alert-danger', 'Edital não encontrado');
+        return redirect()->back();
+        
+    }
+
+    public function storeTemaAluno(Request $request)
+    {   
+ 
+        $edital =  $request->session()->get('edital');
+        $request->session()->forget('edital');
+        $user = \Auth::user()->id;
+        if ($edital->orientadores()->wherePivot('idOrientador', $user)->first()) {
+            $edital
+                ->orientadores()
+                ->updateExistingPivot(
+                    $user, 
+                    [
+                        'temasOrientacao' => $request->temasOrientacao, 
+                        'numVagas' => $request->numVagas
+                    ]);
+        } else {
+            $edital->orientadores()->attach(
+                $user, 
+                [
+                    'temasOrientacao' => $request->temasOrientacao, 
+                    'numVagas' => $request->numVagas
+                ]);
+        }
+        $edital->save();
+        return redirect("/editais");
     }
 }

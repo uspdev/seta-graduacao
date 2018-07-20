@@ -29,6 +29,6 @@ class User extends Authenticatable
 
     public function editais()
     {
-        return $this->belongsToMany('App\Edital', 'orientadoresEdital', 'idOrientador', 'idEdital')->withPivot('temasOrientacao', 'numVagas');
+        return $this->belongsToMany('App\Edital', 'orientadoresEdital', 'idOrientador', 'idEdital')->withPivot('temasOrientacao', 'numVagas')->withTimestamps();
     }
 }
