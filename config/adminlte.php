@@ -110,12 +110,12 @@ return [
     'menu' => [
         [ 
             'header' => 'Área do aluno',
-            'can'    => 'ALUNO'
+            //'can'    => 'ALUNO'
         ],
         [
             'text'        => 'Submeter Trabalho',
             'url'         => '/arquivo',
-            'can'         => 'ALUNO',
+            //'can'         => 'ALUNO',
             'icon'        => 'file',
             'label_color' => 'success',
         ],
