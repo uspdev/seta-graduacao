@@ -5,6 +5,19 @@
  */
 function getAdmins()
 {
-    return explode(',', trim(config('CODPES_ADMINS')));
+    return arrayFromConfig(config('seta.admins'));
 }
 
+/**
+ * Retorna os vinculos cadastrados no env
+ * @return array
+ */
+function getVinculos()
+{
+    return arrayFromConfig(config('seta.vinculos'));
+}
+
+function arrayFromConfig(string $config)
+{
+    return explode(',', trim($config));
+}
