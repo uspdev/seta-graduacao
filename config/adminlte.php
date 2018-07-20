@@ -108,17 +108,25 @@ return [
     */
 
     'menu' => [
-        'Área do aluno',
+        [ 
+            'header' => 'Área do aluno',
+            'can'    => 'ALUNO'
+        ],
         [
             'text'        => 'Submeter Trabalho',
             'url'         => '/arquivo',
+            'can'         => 'ALUNO',
             'icon'        => 'file',
             'label_color' => 'success',
         ],
-        'Área do Administrador',
+        [
+            'header' => 'Área do Administrador',
+            'can'    => 'ADMIN'
+        ],
         [
             'text'        => 'Cadastrar Edital',
             'url'         => '/editais/create',
+            'can'    => 'ADMIN',
             'icon'        => 'calendar-plus-o',
             'label_color' => 'info',
         ],
@@ -128,14 +136,6 @@ return [
             'icon'        => 'calendar',
             'label_color' => 'info',
         ],
-        'Área do Docente',
-        [
-            'text'        => 'Cad Temas e Qtde Alunos',
-            'url'         => '/cadtema',
-            'icon'        => 'file-text-o',
-            'label_color' => 'info',
-        ],
-
     ],
 
     /*
