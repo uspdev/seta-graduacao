@@ -1,7 +1,7 @@
 <?php
 
 return [
-    
+
     /*
     |--------------------------------------------------------------------------
     | Configuração dos administradores do sistema
@@ -12,5 +12,6 @@ return [
     | you may use many connections at once using the Database library.
     |
  */
-    'admins' => env('CODPES_ADMINS', false)
+    'admins' => env('CODPES_ADMINS', false),
+    'vinculos' => env('VINCULOS_ACEITOS', false)
 ];
