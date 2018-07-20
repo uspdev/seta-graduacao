@@ -15,6 +15,16 @@ class Edital extends Model
         return $this::where('anoReferencia', $data->year)->first();
    }
 
+   public function getEditaisAtivos()
+   {
+       return $this::where('ativo', 1)->get();
+   }
+
+   public function getMenuEditaisAtivos()
+   {
+       return $this::select('anoReferencia')->where('ativo', 1)->get();
+   }
+
    ## Relacionamentos
    public function orientadores()
    {

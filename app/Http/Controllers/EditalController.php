@@ -122,24 +122,29 @@ class EditalController extends Controller
      * Seção de cadastro de temas e orientandos para docente
      * 
      */
-    public function cadTemaAluno()
+    public function cadTemaAluno(Request $request, $ano = null)
     {   
         if (!Auth::user()){
             return redirect("/");
         }
         $user = Auth::user()->id;
-        $ano = Carbon::create(2018);
-        $edital = Edital::where('anoReferencia', $ano->year)->first();
-        $cadtema = $edital->orientadores()->wherePivot('idOrientador', $user)->first();
-        return view('orientador.temas_vagas', compact(['edital','cadtema']));
+        $ano_edital = Carbon::create($ano);
+        $edital = Edital::where('anoReferencia', $ano_edital->year)->first();
+        if ($edital) {
+            $cadtema = $edital->orientadores()->wherePivot('idOrientador', $user)->first();
+            $request->session()->put('edital', $edital);
+            return view('orientador.temas_vagas', compact(['edital','cadtema']));
+        }
+        $request->session()->flash('alert-danger', 'Edital não encontrado');
+        return redirect()->back();
+        
     }
 
     public function storeTemaAluno(Request $request)
     {   
-        $ano = Carbon::create(2017);
-        // $edital = Edital::where('anoReferencia', $ano->year)->first();
-        $edital = (new Edital)->getEditalPorAno($ano);
-        
+ 
+        $edital =  $request->session()->get('edital');
+        $request->session()->forget('edital');
         $user = \Auth::user()->id;
         if ($edital->orientadores()->wherePivot('idOrientador', $user)->first()) {
             $edital
