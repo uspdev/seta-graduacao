@@ -75,11 +75,12 @@ class LoginController extends Controller
     private function retornaVinculo($user)
     {
         $vinculo = false;
-        $admins = explode(',', trim(env('CODPES_ADMINS')));
-        $vinculos = array('ALUNOGR', 'DOCENTE');
+        $admins = getAdmins();
+        $vinculos = getVinculos();
         
         foreach ($user->vinculo as $temp) {
-          if (in_array($temp['tipoVinculo'], $vinculos) && ($temp['codigoUnidade'] == env('REPLICADO_CODUND')))
+          if (in_array($temp['tipoVinculo'], $vinculos) 
+            && ($temp['codigoUnidade'] == env('REPLICADO_CODUND')))
           {
             $vinculo = $temp['tipoVinculo'];
           }
