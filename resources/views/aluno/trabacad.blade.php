@@ -19,7 +19,7 @@
     </div>
     <!-- /.box-header -->
     <!-- form start -->
-    <form enctype="multipart/form-data" role="form" method="POST" action="{{ url('/arquivo/submeter') }}">
+    <form enctype="multipart/form-data" role="form" method="POST" action="{{ url('/trabacad/submeter') }}">
     {{ csrf_field() }}
       <div class="box-body">
         <div class="form-group">

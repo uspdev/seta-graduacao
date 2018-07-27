@@ -121,7 +121,7 @@ return [
         ],
         [
             'text'        => 'Submeter Trabalho',
-            'url'         => '/arquivo',
+            'url'         => '/trabacad',
             #'can'         => 'ALUNO',
             'icon'        => 'file',
             'label_color' => 'success',
