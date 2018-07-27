@@ -13,7 +13,7 @@ class OrientadoresEditalSeeder extends Seeder
     public function run()
     {
         $now = new Carbon();
-        DB::table('orientadoresEdital')->insert([
+        DB::table('orientadores_edital')->insert([
             [
                 'idEdital' => 1,
                 'idOrientador' => 123,
