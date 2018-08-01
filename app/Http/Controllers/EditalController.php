@@ -141,6 +141,11 @@ class EditalController extends Controller
 
     public function storeTemaAluno(Request $request, Edital $edital)
     {   
+
+        if (!$edital) {
+            $request->session()->flash('alert-danger', 'Edital não encontrado');
+            return redirect()->back();
+        }
         $user = \Auth::user()->id;
         if ($edital->orientadores()->wherePivot('idOrientador', $user)->first()) {
             $edital
