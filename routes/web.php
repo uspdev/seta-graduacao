@@ -21,7 +21,7 @@ Route::post('logout', 'Auth\LoginController@logout');
 
 #Área do aluno
 Route::get('/inscricao', 'TrabalhoAcademicoController@index');
-Route::get('/trabacad', 'TrabalhoAcademicoController@index');
+Route::get('/trabacad', 'TrabalhoAcademicoController@trabAcadIndex');
 Route::post('/trabacad/submeter', 'TrabalhoAcademicoController@submit');
 
 #Área de Docentes

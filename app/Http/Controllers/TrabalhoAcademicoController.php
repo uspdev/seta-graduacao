@@ -13,9 +13,10 @@ class TrabalhoAcademicoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index() 
     {
-        return view('aluno.trabacad');
+        $docentes = App\User::where('tipoVinculo', 'DOCENTE');
+        return view('aluno.inscricao', compact('docentes'));
     }
 
     /**
@@ -84,6 +85,10 @@ class TrabalhoAcademicoController extends Controller
         //
     }
 
+    public function trabAcadIndex()
+    {
+        return view('aluno.trabacad');
+    }
     public function submit(Request $request)
     {
         $request->validate([
