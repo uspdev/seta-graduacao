@@ -12,8 +12,6 @@ $factory->define(App\Edital::class, function (Faker $faker) {
     $now = Carbon::createFromFormat('Y-m-d', $data);
     $publicacao_resultados = Carbon::createFromFormat('Y-m-d', $data)->addMonths(1)->addWeek(1);
     $final_relatorio = Carbon::createFromFormat('Y-m-d', $data)->addMonths(7)->addWeek(1)->toDateString();
-    
-    // dump($publicacao_resultados);
     return [
         'anoReferencia' => $now->year,
         'dtInicialInscricao' => $now->toDateString(),
