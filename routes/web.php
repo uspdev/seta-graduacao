@@ -14,7 +14,7 @@ Route::patch('editais/{edital}', 'EditalController@update');
 Route::get('editais/{edital}/edit', 'EditalController@edit');
 Route::post('editais', 'EditalController@store');*/
 Route::get('/cadtemagrad', 'EditalController@cadTemaAlunoGrad');
-Route::post('/cadtemagrad/', 'EditalController@storeTemaAlunoGrad');
+Route::post('/cadtemagrad', 'EditalController@storeTemaAlunoGrad');
 
 #Login
 Route::get('login', 'Auth\LoginController@redirectToProvider');
