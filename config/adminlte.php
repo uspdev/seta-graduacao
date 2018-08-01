@@ -143,6 +143,12 @@ return [
             'icon'        => 'calendar',
             'label_color' => 'info',
         ],
+        [
+            'text'        => 'Temas e nro vagas - Docente',
+            'url'         => '/cadtemagrad',
+            'icon'        => 'calendar',
+            'label_color' => 'info',
+        ],
     ],
 
     /*

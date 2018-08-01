@@ -19,7 +19,24 @@
     <!-- form start -->
     <form method="POST" action="">
     @csrf
-    
+      <table class="table table-striped">
+          <thead>
+              <tr>
+                  <th>Numero USP</th>
+                  <th>Nome</th>
+              </tr>
+          </thead>
+          <tbody>
+              @foreach($docentes as $docente)
+              <tr>
+                  <td>{{ $docente->id }}</a></td>
+                  <td>
+                    {{ $docente->name }}
+                  </td>
+              </tr>
+              @endforeach
+          </tbody>
+      </table>
     </form>
   </div>
 </div>

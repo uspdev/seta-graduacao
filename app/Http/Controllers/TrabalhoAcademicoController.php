@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\TrabalhoAcademico;
 use Illuminate\Http\Request;
 use Smalot\PdfParser\Parser;
+use App\Http\Controllers\UserController;
 
 class TrabalhoAcademicoController extends Controller
 {
@@ -15,7 +16,7 @@ class TrabalhoAcademicoController extends Controller
      */
     public function index() 
     {
-        $docentes = App\User::where('tipoVinculo', 'DOCENTE');
+        $docentes = (new UserController)->getDocentes();
         return view('aluno.inscricao', compact('docentes'));
     }
 
@@ -89,6 +90,7 @@ class TrabalhoAcademicoController extends Controller
     {
         return view('aluno.trabacad');
     }
+    
     public function submit(Request $request)
     {
         $request->validate([
