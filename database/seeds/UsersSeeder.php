@@ -2,6 +2,8 @@
 
 use Illuminate\Database\Seeder;
 use Carbon\Carbon;
+use Uspdev\Replicado\Pessoa;
+use SebastianBergmann\Comparator\Factory;
 
 class UsersSeeder extends Seeder
 {
@@ -12,24 +14,6 @@ class UsersSeeder extends Seeder
      */
     public function run()
     {
-        $now = new Carbon();
-        DB::table('users')->insert([
-            [
-                'id' => 123,
-                'name' => 'ABCDE',
-                'email' => 'abc@def.gh',
-                'tipoVinculo' => 'DOCENTE',
-                "created_at" => $now,
-                "updated_at" => $now,
-            ],
-            [
-                'id' => 456,
-                'name' => 'GHIJK',
-                'email' => 'lmn@opq.rs',
-                'tipoVinculo' => 'DOCENTE',
-                "created_at" => $now,
-                "updated_at" => $now,
-            ],
-        ]);
+        
     }
 }

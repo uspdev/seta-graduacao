@@ -28,7 +28,7 @@ class Edital extends Model
    ## Relacionamentos
    public function orientadores()
    {
-       return $this->belongsToMany('App\User', 'orientadoresEdital', 'idEdital', 'idOrientador')->withPivot('temasOrientacao', 'numVagas')->withTimestamps();
+       return $this->belongsToMany('App\User', 'orientadores_edital', 'idEdital', 'idOrientador')->withPivot('temasOrientacao', 'numVagas')->withTimestamps();
    }
 
 }

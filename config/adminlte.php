@@ -110,12 +110,19 @@ return [
     'menu' => [
         [ 
             'header' => 'Área do aluno',
-            //'can'    => 'ALUNO'
+            #'can'    => 'ALUNO'
+        ],
+        [
+            'text'        => 'Inscrição',
+            'url'         => '/inscricao',
+            #'can'         => 'ALUNO',
+            'icon'        => 'list',
+            'label_color' => 'success',
         ],
         [
             'text'        => 'Submeter Trabalho',
-            'url'         => '/arquivo',
-            //'can'         => 'ALUNO',
+            'url'         => '/trabacad',
+            #'can'         => 'ALUNO',
             'icon'        => 'file',
             'label_color' => 'success',
         ],
@@ -133,6 +140,12 @@ return [
         [
             'text'        => 'Listar Editais',
             'url'         => '/editais',
+            'icon'        => 'calendar',
+            'label_color' => 'info',
+        ],
+        [
+            'text'        => 'Temas e nro vagas - Docente',
+            'url'         => '/cadtemagrad',
             'icon'        => 'calendar',
             'label_color' => 'info',
         ],

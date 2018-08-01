@@ -132,7 +132,6 @@ class EditalController extends Controller
         $edital = Edital::where('anoReferencia', $ano_edital->year)->first();
         if ($edital) {
             $cadtema = $edital->orientadores()->wherePivot('idOrientador', $user)->first();
-            $request->session()->put('edital', $edital);
             return view('orientador.temas_vagas', compact(['edital','cadtema']));
         }
         $request->session()->flash('alert-danger', 'Edital não encontrado');
@@ -142,6 +141,7 @@ class EditalController extends Controller
 
     public function storeTemaAluno(Request $request, Edital $edital)
     {   
+
         if (!$edital) {
             $request->session()->flash('alert-danger', 'Edital não encontrado');
             return redirect()->back();

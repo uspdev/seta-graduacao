@@ -16,7 +16,7 @@
                 $title = 'Cadastrar tema e quantidade de vagas';
             @endphp
 
-            <form method="POST" action="/cadtema/{{ $edital->id }}"> 
+            <form method="POST" action="{{ url('cadtema') . '/' . $edital->id }}"> 
                 {{ csrf_field() }}
                 @include('orientador.form')
             </form>

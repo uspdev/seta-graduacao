@@ -13,7 +13,7 @@ class CreateOrientadoreseditalTable extends Migration
      */
     public function up()
     {
-        Schema::create('orientadoresEdital', function (Blueprint $table) {
+        Schema::create('orientadores_edital', function (Blueprint $table) {
 
             # FKs
             $table->integer('idEdital')->unsigned();
