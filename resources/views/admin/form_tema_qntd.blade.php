@@ -1,4 +1,4 @@
-<div class="box-body">
+                <div class="box-body">
                     @can('ADMIN')
                     <div class="row">
                         <div class="form-group col-md-3">
@@ -35,7 +35,7 @@
                             <div class="row">
                                 <div class="col-md-3">
                                     <input class="form-control" name="numVagas" id="numVagas" type="number" min="0" step="1"
-                                        @if ($cadtema){
+                                        @if (isset($cadtema)){
                                             value="{{ $cadtema['pivot']['numVagas'] or old('numVagas')}}" 
                                         @else
                                             value=""
@@ -51,7 +51,7 @@
                         <div class="col-md-12 input-group">
                             <textarea class="form-control" name="temasOrientacao" id="temasOrientacao" 
                                       rows="8" style="resize: vertical;"
-                                >@if($cadtema){{ $cadtema['pivot']['temasOrientacao'] or old('temasOrientacao')}}@endif</textarea>
+                                >@if(isset($cadtema)){{ $cadtema['pivot']['temasOrientacao'] or old('temasOrientacao')}}@endif</textarea>
                         </div>
                     </div>
                 </div>
@@ -59,3 +59,4 @@
                 <div class="box-footer">
                     <button type="submit" class="btn btn-primary">Gravar</button>
                 </div>
+            </div>
