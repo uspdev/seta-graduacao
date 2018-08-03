@@ -27,5 +27,5 @@ Route::get('/trabacad', 'TrabalhoAcademicoController@trabAcadIndex');
 Route::post('/trabacad/submeter', 'TrabalhoAcademicoController@submit');
 
 #Área de Docentes
-Route::get('/cadtema/{ano}', 'EditalController@cadTemaAluno');
-Route::post('/cadtema/{edital}', 'EditalController@storeTemaAluno');
+Route::get('/cadtema/{ano}', 'DocenteController@cadTemaAluno');
+Route::post('/cadtema/{edital}', 'DocenteController@storeTemaAluno');
