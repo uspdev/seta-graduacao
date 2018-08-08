@@ -3,7 +3,7 @@
                     <div class="row">
                         <div class="form-group col-md-3">
                             <label for="edital">Edital</label>
-                            <select name="edital" class="form-control">
+                            <select id="tema_edital" name="edital" class="form-control">
                                 <option>Selecione</option>
                                 @if ( isset($editais_ativos))
                                     @foreach($editais_ativos as $edital)
@@ -17,7 +17,7 @@
                     <div class="row">
                         <div class="form-group col-md-6">
                             <label for="docente">Docente</label>
-                            <select name="docente" id="docente" class="form-control">
+                            <select name="docente" id="tema_docente" class="form-control">
                                 <option>Selecione</option>
                                 @if (isset($docentes))
                                     @foreach($docentes as $docente)

@@ -1,5 +1,4 @@
 <?php
-
 Route::get('/', 'IndexController@index');
 
 # Área do Administrador
@@ -29,3 +28,6 @@ Route::post('/trabacad/submeter', 'TrabalhoAcademicoController@submit');
 #Área de Docentes
 Route::get('/cadtema/{ano}', 'DocenteController@cadTemaAluno');
 Route::post('/cadtema/{edital}', 'DocenteController@storeTemaAluno');
+
+#Ajax
+Route::post('/ajax/TAD', 'EditalController@getTemaAlunoDocente');

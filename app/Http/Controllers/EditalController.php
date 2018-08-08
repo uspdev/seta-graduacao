@@ -9,6 +9,8 @@ use Carbon\Carbon;
 //use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\DocenteModel;
+use Symfony\Component\Console\Input\Input;
+use function GuzzleHttp\json_decode;
 
 
 class EditalController extends Controller
@@ -122,16 +124,26 @@ class EditalController extends Controller
 
     public function getTemaAlunoDocente(Request $request)
     {
-        $edital = (new Edital)->getEdital($request['edital']);
-        $cadtema = $edital->getTemasVagas($request['docente']);
-        return response()->json($cadtema);
+        $edital = (new Edital)->getEdital($request->edital);
+        $cadtema = $edital->getTemasVagas($request->docente);
+        if (!$cadtema) {
+            return response()->json(false);
+        }
+        return response()->json(array($cadtema->pivot->numVagas, $cadtema->pivot->temasOrientacao));
+    }
+
+    public function jsonData()
+    {
+       
+        $myArray = ['id' => 1, 'name' => 'HD'];
+        return response()->json($myArray);
     }
 
     /***
      * Seção de cadastro de temas e orientandos para docente
      * 
      */
-    
+
     public function cadTemaAlunoGrad()
     {
         $docentes = (new DocenteModel())->getDocentes();
@@ -148,7 +160,7 @@ class EditalController extends Controller
         $edital = Edital::find($request['edital']);
         $user = User::find($request['docente']);
 
-        if ($edital->getTemasVagas($user)) {
+        if ($edital->getTemasVagas($user->id)) {
             $edital
                 ->orientadores()
                 ->updateExistingPivot(
