@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\TrabalhoAcademico;
 use Illuminate\Http\Request;
 use Smalot\PdfParser\Parser;
-use App\Http\Controllers\UserController;
+use App\Models\DocenteModel;
 
 class TrabalhoAcademicoController extends Controller
 {
@@ -16,7 +16,7 @@ class TrabalhoAcademicoController extends Controller
      */
     public function index() 
     {
-        $docentes = (new UserController)->getDocentes();
+        $docentes = (new DocenteModel)->getDocentes();
         return view('aluno.inscricao', compact('docentes'));
     }
 
