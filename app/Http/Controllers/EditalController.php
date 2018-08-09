@@ -151,12 +151,18 @@ class EditalController extends Controller
         return view('admin.tema_qntd', compact(['docentes', 'editais_ativos']));
     }
 
+    /**
+     * Função para gravar os Temas de orientação e 
+     */
     public function storeTemaAlunoGrad(Request $request)
     {
         if (!$request['edital']) {
             $request->session()->flash('alert-danger', 'Edital não encontrado');
             return redirect()->back();
         }
+        $request->validate([
+            'numVagas' => 'required|numeric|min:4|max:8',
+        ]);
         $edital = Edital::find($request['edital']);
         $user = User::find($request['docente']);
 

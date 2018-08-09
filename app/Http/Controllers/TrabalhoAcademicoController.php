@@ -86,6 +86,11 @@ class TrabalhoAcademicoController extends Controller
         //
     }
 
+    /**
+     * 
+     * 
+     * 
+     */
     public function trabAcadIndex()
     {
         return view('aluno.trabacad');
