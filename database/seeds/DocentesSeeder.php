@@ -4,7 +4,7 @@ use Illuminate\Database\Seeder;
 use Carbon\Carbon;
 use Uspdev\Replicado\Pessoa;
 
-class UsersSeeder extends Seeder
+class DocentesSeeder extends Seeder
 {
     /**
      * Run the database seeds.

@@ -3,10 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Edital;
+use App\User;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 //use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\DocenteModel;
+use Symfony\Component\Console\Input\Input;
+use function GuzzleHttp\json_decode;
 
 
 class EditalController extends Controller
@@ -42,18 +46,18 @@ class EditalController extends Controller
     {
         //dd($request->dtInicialInscricao);
         $edital = new Edital;
-        $edital->anoReferencia              = $request->anoReferencia;
-        $edital->dtInicialInscricao         = $request->dtInicialInscricao;
-        $edital->dtFinalInscricao           = $request->dtFinalInscricao;
-        $edital->dtPublicacaoResultados     = $request->dtPublicacaoResultados;
-        $edital->dtInicialRelatorio         = $request->dtInicialRelatorio;
-        $edital->dtFinalRelatorio           = $request->dtFinalRelatorio;
-        $edital->dtInicialTCC               = $request->dtInicialTCC;
-        $edital->dtFinalTCC                 = $request->dtFinalTCC;
-        $edital->dtInicialInscricaoBanca    = $request->dtInicialInscricaoBanca;
-        $edital->dtFinalInscricaoBanca      = $request->dtFinalInscricaoBanca;
-        $edital->dtInicialApresentacaoTCC   = $request->dtInicialApresentacaoTCC;
-        $edital->dtFinalApresentacaoTCC     = $request->dtFinalApresentacaoTCC;
+        $edital->anoReferencia = $request->anoReferencia;
+        $edital->dtInicialInscricao = $request->dtInicialInscricao;
+        $edital->dtFinalInscricao = $request->dtFinalInscricao;
+        $edital->dtPublicacaoResultados = $request->dtPublicacaoResultados;
+        $edital->dtInicialRelatorio = $request->dtInicialRelatorio;
+        $edital->dtFinalRelatorio = $request->dtFinalRelatorio;
+        $edital->dtInicialTCC = $request->dtInicialTCC;
+        $edital->dtFinalTCC = $request->dtFinalTCC;
+        $edital->dtInicialInscricaoBanca = $request->dtInicialInscricaoBanca;
+        $edital->dtFinalInscricaoBanca = $request->dtFinalInscricaoBanca;
+        $edital->dtInicialApresentacaoTCC = $request->dtInicialApresentacaoTCC;
+        $edital->dtFinalApresentacaoTCC = $request->dtFinalApresentacaoTCC;
         $edital->save();
         return redirect("/editais/$edital->id");
     }
@@ -89,18 +93,18 @@ class EditalController extends Controller
      */
     public function update(Request $request, Edital $edital)
     {
-        $edital->dtInicialInscricao         = $request->dtInicialInscricao;
-        $edital->dtFinalInscricao           = $request->dtFinalInscricao;
-        $edital->dtPublicacaoResultados     = $request->dtPublicacaoResultados;
-        $edital->dtInicialRelatorio         = $request->dtInicialRelatorio;
-        $edital->dtFinalRelatorio           = $request->dtFinalRelatorio;
-        $edital->dtInicialTCC               = $request->dtInicialTCC;
-        $edital->dtFinalTCC                 = $request->dtFinalTCC;
-        $edital->dtInicialInscricaoBanca    = $request->dtInicialInscricaoBanca;
-        $edital->dtFinalInscricaoBanca      = $request->dtFinalInscricaoBanca;
-        $edital->dtInicialApresentacaoTCC   = $request->dtInicialApresentacaoTCC;
-        $edital->dtFinalApresentacaoTCC     = $request->dtFinalApresentacaoTCC;
-        $edital->ativo                      = ($request->ativo)?1:0;
+        $edital->dtInicialInscricao = $request->dtInicialInscricao;
+        $edital->dtFinalInscricao = $request->dtFinalInscricao;
+        $edital->dtPublicacaoResultados = $request->dtPublicacaoResultados;
+        $edital->dtInicialRelatorio = $request->dtInicialRelatorio;
+        $edital->dtFinalRelatorio = $request->dtFinalRelatorio;
+        $edital->dtInicialTCC = $request->dtInicialTCC;
+        $edital->dtFinalTCC = $request->dtFinalTCC;
+        $edital->dtInicialInscricaoBanca = $request->dtInicialInscricaoBanca;
+        $edital->dtFinalInscricaoBanca = $request->dtFinalInscricaoBanca;
+        $edital->dtInicialApresentacaoTCC = $request->dtInicialApresentacaoTCC;
+        $edital->dtFinalApresentacaoTCC = $request->dtFinalApresentacaoTCC;
+        $edital->ativo = ($request->ativo) ? 1 : 0;
         $edital->save();
         return redirect("/editais/$edital->id");
     }
@@ -118,51 +122,68 @@ class EditalController extends Controller
         return redirect()->action('EditalController@index');
     }
 
+    public function getTemaAlunoDocente(Request $request)
+    {
+        $edital = (new Edital)->getEdital($request->edital);
+        $cadtema = $edital->getTemasVagas($request->docente);
+        if (!$cadtema) {
+            return response()->json(false);
+        }
+        return response()->json(array($cadtema->pivot->numVagas, $cadtema->pivot->temasOrientacao));
+    }
+
+    public function jsonData()
+    {
+       
+        $myArray = ['id' => 1, 'name' => 'HD'];
+        return response()->json($myArray);
+    }
+
     /***
      * Seção de cadastro de temas e orientandos para docente
      * 
      */
-    public function cadTemaAluno(Request $request, $ano = null)
-    {   
-        if (!Auth::user()){
-            return redirect("/");
-        }
-        $user = Auth::user()->id;
-        $ano_edital = Carbon::create($ano);
-        $edital = Edital::where('anoReferencia', $ano_edital->year)->first();
-        if ($edital) {
-            $cadtema = $edital->orientadores()->wherePivot('idOrientador', $user)->first();
-            return view('orientador.temas_vagas', compact(['edital','cadtema']));
-        }
-        $request->session()->flash('alert-danger', 'Edital não encontrado');
-        return redirect()->back();
-        
+
+    public function cadTemaAlunoGrad()
+    {
+        $docentes = (new DocenteModel())->getDocentes();
+        $editais_ativos = (new Edital)->getEditaisAtivos();
+        return view('admin.tema_qntd', compact(['docentes', 'editais_ativos']));
     }
 
-    public function storeTemaAluno(Request $request, Edital $edital)
-    {   
-
-        if (!$edital) {
+    /**
+     * Função para gravar os Temas de orientação e 
+     */
+    public function storeTemaAlunoGrad(Request $request)
+    {
+        if (!$request['edital']) {
             $request->session()->flash('alert-danger', 'Edital não encontrado');
             return redirect()->back();
         }
-        $user = \Auth::user()->id;
-        if ($edital->orientadores()->wherePivot('idOrientador', $user)->first()) {
+        $request->validate([
+            'numVagas' => 'required|numeric|min:4|max:8',
+        ]);
+        $edital = Edital::find($request['edital']);
+        $user = User::find($request['docente']);
+
+        if ($edital->getTemasVagas($user->id)) {
             $edital
                 ->orientadores()
                 ->updateExistingPivot(
-                    $user, 
+                    $user,
                     [
-                        'temasOrientacao' => $request->temasOrientacao, 
+                        'temasOrientacao' => $request->temasOrientacao,
                         'numVagas' => $request->numVagas
-                    ]);
+                    ]
+                );
         } else {
             $edital->orientadores()->attach(
-                $user, 
+                $user,
                 [
-                    'temasOrientacao' => $request->temasOrientacao, 
+                    'temasOrientacao' => $request->temasOrientacao,
                     'numVagas' => $request->numVagas
-                ]);
+                ]
+            );
         }
         $edital->save();
         return redirect("/editais");

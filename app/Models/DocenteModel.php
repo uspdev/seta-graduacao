@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Models;
 
-use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\Model;
 use App\User;
 
-class UserController extends Controller
+class DocenteModel extends Model
 {
     public function getDocentes()
     {
