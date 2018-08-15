@@ -23,13 +23,12 @@
     {{ csrf_field() }}
       <div class="box-body">
         <div class="form-group">
-          <label for="titulo">Título do Trabalho</label>
+          <label for="tituloTrabalhoAcademico">Título do Trabalho</label>
           <input class="form-control" name="titulo" id="titulo" placeholder="Título do trabalho" type="text">
         </div>
         <div class="form-group">
           <label for="arquivo">Arquivo</label>
           <input name="arquivo" id="arquivo" type="file">
-
           <p class="help-block">O arquivo tem que estar no formato PDF.</p>
         </div>
       </div>
