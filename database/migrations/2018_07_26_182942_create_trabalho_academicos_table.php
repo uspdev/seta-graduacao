@@ -21,11 +21,17 @@ class CreateTrabalhoAcademicosTable extends Migration
             $table->string('lattesUrl')
                 ->comment('Link do Lattes do Aluno')
                 ->nullable();
+            $table->string('tituloProjetoPesquisa')
+                ->comment('Título do projeto')
+                ->nullable();
             $table->string('projetoPesquisa')
                 ->comment('Arquivo em PDF do proejeto de pesquisa do aluno')
                 ->nullable();
             $table->string('relatorioParcial')
                 ->comment('Arquivo em PDF do relatório parcial do aluno')
+                ->nullable();
+            $table->string('tituloTrabalhoAcademico')
+                ->comment('Titulo do Trabalho')
                 ->nullable();
             $table->string('trabalhoAcademico')
                 ->comment('Arquivo em PDF do TCC pronto para enviar ao orientador e membros da banca')

@@ -12,6 +12,6 @@ class EditaisSeeder extends Seeder
      */
     public function run()
     {
-
+        // factory(\App\Edital::class)->states('this_year')->create();
     }
 }

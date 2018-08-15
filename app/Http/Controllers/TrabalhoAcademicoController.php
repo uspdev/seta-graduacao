@@ -6,6 +6,7 @@ use App\TrabalhoAcademico;
 use Illuminate\Http\Request;
 use Smalot\PdfParser\Parser;
 use App\Models\DocenteModel;
+use App\Edital;
 
 class TrabalhoAcademicoController extends Controller
 {
@@ -17,7 +18,8 @@ class TrabalhoAcademicoController extends Controller
     public function index() 
     {
         $docentes = (new DocenteModel)->getDocentes();
-        return view('aluno.inscricao', compact('docentes'));
+        $editais_ativos = (new Edital)->getEditaisAtivos();
+        return view('aluno.inscricao', compact(['docentes', 'editais_ativos']));
     }
 
     /**
@@ -38,7 +40,18 @@ class TrabalhoAcademicoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // dd($request);
+        $request->validate([
+            'edital'                => "required",
+            'tituloProjetoPesquisa' => "required",
+            'projetoPesquisa'       => "required|mimes:pdf|max:5000",
+            'lattesUrl'             => "required|url",
+            'opcao_um'              => "required",
+            'opcao_dois'            => "sometimes|different:opcao_um",
+            'opcao_tres'            => "sometimes|different:opcao_dois|different:opcao_um",
+        ]);
+
+        
     }
 
     /**
