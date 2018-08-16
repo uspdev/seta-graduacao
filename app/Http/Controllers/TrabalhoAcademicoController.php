@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Smalot\PdfParser\Parser;
 use App\Models\DocenteModel;
 use App\Edital;
+use App\User;
+use Illuminate\Support\Facades\Auth;
 
 class TrabalhoAcademicoController extends Controller
 {
@@ -41,17 +43,32 @@ class TrabalhoAcademicoController extends Controller
     public function store(Request $request)
     {
         // dd($request);
-        $request->validate([
-            'edital'                => "required",
-            'tituloProjetoPesquisa' => "required",
-            'projetoPesquisa'       => "required|mimes:pdf|max:5000",
-            'lattesUrl'             => "required|url",
-            'opcao_um'              => "required",
-            'opcao_dois'            => "sometimes|different:opcao_um",
-            'opcao_tres'            => "sometimes|different:opcao_dois|different:opcao_um",
-        ]);
-
+        // $request->validate([
+        //     'edital'                => "required",
+        //     'tituloProjetoPesquisa' => "required",
+        //     'projetoPesquisa'       => "required|mimes:pdf|max:5000",
+        //     'lattesUrl'             => "required|url",
+        //     'opcao_um'              => "required",
+        //     'opcao_dois'            => "sometimes|different:opcao_um",
+        //     'opcao_tres'            => "sometimes|different:opcao_dois|different:opcao_um",
+        // ]);
+        // $edital = (new Edital)->getEdital($request->edital);
+        // if(!$edital->isEditalAtivo()){
+        //     $request->session()->flash('alert-danger', 'Edital não está ativo');
+        //     return redirect()->back();
+        // }
+        $orientador1 = (new DocenteModel)->getDocente($request->opcao_um);
+        if(isset($request->opcao_dois))
+        {
+            $orientador2 = (new DocenteModel)->getDocente($request->opcao_dois);
+        }
+        if(isset($request->opcao_tres))
+        {
+            $orientador2 = (new DocenteModel)->getDocente($request->opcao_tres);
+        }
         
+
+
     }
 
     /**
