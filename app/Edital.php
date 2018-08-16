@@ -43,6 +43,13 @@ class Edital extends Model
         return $this::where('anoReferencia', $ano_edital->year)->first();
     }
 
+    /**
+     * Verifica seo edital é ativo
+     */
+    public function isEditalAtivo(){
+        return ($this->ativo)?true:false;
+    }
+
    ## Relacionamentos
     public function orientadores()
     {
