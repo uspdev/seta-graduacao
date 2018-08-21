@@ -17,4 +17,9 @@ class DocenteModel extends Model
     {
         return User::select('id', 'name')->where('tipoVinculo', 'DOCENTE')->orderBy('name')->get();
     }
+
+    public static function isDocente($id)
+    {
+        return (User::where('id', $id)->where('tipoVinculo', 'DOCENTE')->first())?true:false;
+    }
 }

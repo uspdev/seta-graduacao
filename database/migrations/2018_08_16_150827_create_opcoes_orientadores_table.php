@@ -28,8 +28,8 @@ class CreateOpcoesOrientadoresTable extends Migration
 
              # Constraints
              $table->primary(['idEdital', 'idAluno', 'idOrientador']);            
-             $table->foreign('idEdital')->references('id')->on('editais');
-             $table->foreign('idAluno')->references('id')->on('users');
+             $table->foreign('idEdital')->references('idEdital')->on('trabalhos_academicos');
+             $table->foreign('idAluno')->references('idAluno')->on('trabalhos_academicos');
              $table->foreign('idOrientador')->references('id')->on('users');
         });
     }
