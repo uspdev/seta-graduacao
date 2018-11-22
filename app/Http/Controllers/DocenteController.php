@@ -53,5 +53,4 @@ class DocenteController extends Controller
         $edital->save();
         return redirect("/editais");
     }
-
 }

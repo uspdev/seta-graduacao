@@ -27,6 +27,7 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    /** Relacionamentos */
     public function editais()
     {
         return $this->belongsToMany('App\Edital', 'orientadores_edital', 'idOrientador', 'idEdital')

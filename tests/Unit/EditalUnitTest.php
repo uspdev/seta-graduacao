@@ -41,4 +41,13 @@ class EditalUnitTest extends TestCase
         $this->assertEquals(2, count($ativos));
         $this->assertEquals(3, count($todos));
     }
+
+    /** @test */
+    public function verificaSeAtivo()
+    {
+        factory(\App\Edital::class)->states('unactive')->create();
+        $edital_model = new Edital();
+        $edital_model = \App\Edital::first();
+        $this->assertEquals(false, $edital_model->isEditalAtivo());
+    }
 }
